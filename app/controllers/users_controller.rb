@@ -1,10 +1,11 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show edit update destroy ]
+  # before_action :set_user, only: %i[ show edit update destroy ]
+  skip_before_action :verify_authenticity_token
 
   # GET /users or /users.json
   def index
     @users = User.all
-    render json: UserSerializer.new(@users).serializable_hash[:data].map { |hash| hash[:attributes]}
+    render json: @users
   end
 
   # GET /users/1 or /users/1.json
@@ -13,6 +14,7 @@ class UsersController < ApplicationController
       render json: {message: 'off limits'}, status: :unauthorized
     else
       render json: UserSerializer.new
+    end
   end
 
   # GET /users/new
@@ -20,22 +22,13 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  # GET /users/1/edit
-  def edit
-  end
-
   # POST /users or /users.json
   def create
     @user = User.new(user_params)
-
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to user_url(@user), notice: "User was successfully created." }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.save
+      render json: { message: 'User registered successfully' }, status: :created
+    else
+      render json: @user.errors.full_messages
     end
   end
 
@@ -70,6 +63,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:username, :first_name, :last_name, :email, :password_digest)
+      params.require(:user).permit(:username, :first_name, :last_name, :email, :password)
     end
 end
