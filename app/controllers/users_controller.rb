@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   # GET /users/1 or /users/1.json
   def show
     if !authorized(@user)
-      render json: {message: 'off limits'}, status: :unauthorized
+      render json: { message: 'off limits' }, status: :unauthorized
     else
       render json: UserSerializer.new
     end
