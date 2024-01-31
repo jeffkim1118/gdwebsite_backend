@@ -7,11 +7,8 @@ class SessionsController < ApplicationController
   
     def create
       @user = User.find_by(username: params[:user][:username])
-      byebug
       if @user && @user.authenticate(params[:user][:password])
-        byebug
         session['user_id'] = @user.id
-        byebug
         render json: {
           token: get_token(payload(@user.username, @user.id)),
           user: UserSerializer.new(@user).serializable_hash[:data][:attributes]

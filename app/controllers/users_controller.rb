@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   # GET /users or /users.json
   def index
     @users = User.all
-    render json: @users
+    render json: UserSerializer.new(@users).serializable_hash[:data].map { |hash| hash[:attributes] }
   end
 
   # GET /users/1 or /users/1.json
