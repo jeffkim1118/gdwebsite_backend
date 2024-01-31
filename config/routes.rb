@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
   
+  # This is for login route. Using post request to create a session.
   post '/login', to: 'sessions#create'
 
 end
