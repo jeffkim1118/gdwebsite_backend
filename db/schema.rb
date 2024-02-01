@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_29_235426) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_01_204603) do
   create_table "games", force: :cascade do |t|
     t.string "title"
     t.string "genre"
@@ -27,6 +27,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_29_235426) do
     t.text "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "game_id", null: false
+    t.index ["game_id"], name: "index_reviews_on_game_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
@@ -49,6 +51,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_29_235426) do
     t.index ["user_id"], name: "index_wishlists_on_user_id"
   end
 
+  add_foreign_key "reviews", "games"
   add_foreign_key "reviews", "users"
   add_foreign_key "wishlists", "games"
   add_foreign_key "wishlists", "users"
