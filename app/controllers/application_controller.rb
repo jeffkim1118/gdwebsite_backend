@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
-    helper_method :authorized, :get_token, :payload
-
+  helper_method :authorized, :get_token, :payload
+    
   def secret_key
     ENV['SECRET_KEY']
   end
@@ -17,12 +17,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def valid_token? 
+  def valid_token?
     !!try_decode_token
   end
 
   def requires_login
-    if !valid_token?
+    if valid_token?
       render json: {
         message: 'Incorrect Information'
       }, status: :unauthorized
