@@ -10,4 +10,6 @@ Rails.application.routes.draw do
   # This is for login route. Using post request to create a session.
   post '/login', to: 'sessions#create'
 
+  delete '/signout', to: 'sessions#destroy'
+
 end

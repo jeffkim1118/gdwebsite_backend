@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   end
 
   def requires_login
-    if valid_token?
+    if !valid_token?
       render json: {
         message: 'Incorrect Information'
       }, status: :unauthorized
